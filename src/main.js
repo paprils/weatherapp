@@ -41,20 +41,40 @@ const onEnterSubmit = event => {
         fadeInOut();
         let query = viewElements.searchInput.value;
         getWeatherByCity(query).then(data => {
-            console.log(data);
-            switchView();
-            fadeInOut();
+            displayWeatherData(data);
+
         });
     }
 };
 
 const onClickSubmit = () => {
+        fadeInOut();
         let query = viewElements.searchInput.value;
         getWeatherByCity(query).then(data => {
-            console.log(data);
-            switchView();
+            displayWeatherData(data);
         });
 };
+
+const displayWeatherData = data => {
+    switchView();
+    fadeInOut();
+    
+    const weather = data.consolidated_weather[0];
+  
+    viewElements.weatherCity.innerText = data.title;
+    viewElements.weatherIcon.src = `https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`;
+    viewElements.weatherIcon.alt = weather.weather_state_name;
+    viewElements.weatherIcon.style.height = "250px";
+    viewElements.weatherIcon.style.width = "auto";
+
+    const currTemp = weather.the_temp.toFixed(2);
+    const maxTemp = weather.max_temp.toFixed(2);
+    const minTemp = weather.min_temp.toFixed(2);
+
+    viewElements.weatherCurrentTemp.innerText = `Current temperature: ${currTemp}°C`
+    viewElements.weatherMaxTemp.innerText = `Max temperature: ${maxTemp}°C`
+    viewElements.weatherMinTemp.innerText = `Min temperature: ${minTemp}°C`
+}
 
 const fadeInOut = () => {
     if (viewElements.mainContainer.style.opacity === '1' || viewElements.mainContainer.style.opacity === '') {
@@ -84,5 +104,7 @@ const returnToSearch = () => {
         fadeInOut()
     }, 500);
 }
+
+
 
 document.addEventListener('DOMContentLoaded', initializeApp)
