@@ -3,11 +3,12 @@ const _getDOMElem = id => {
   }
   
   export const mapListToDOMElements = listOfId => {
-    const _viewElems = {}
+    const _viewElements = {}
   
     for (const id of listOfId) {
-      _viewElems[id] = _getDOMElem(id);
+      _viewElements[id] = _getDOMElem(id);
     }
   
-    return _viewElems;
+    return _viewElements;
   }
+  
