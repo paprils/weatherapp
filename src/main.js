@@ -29,7 +29,11 @@ handleSubmit = () => {
         let query = this.viewElements.searchInput.value;
         getWeatherByCity(query).then(data => {
             this.displayWeatherData(data);
-        });
+            this.viewElements.searchInput.style.borderColor = 'black';
+        }).catch(() => {
+            this.fadeInOut();
+            this.viewElements.searchInput.style.borderColor = 'red';
+        })
     }
 }
 
